@@ -53,7 +53,7 @@ Welcome to the Online Retail POS (Point of Sale) System project built on Django.
 - ### Configuration
 
   - #### .env configuration
-    - Create a conf.env file in the project's root directory to store your configuration variables. See .env.sample file for required variables.
+    - Create a .env file in the project's root directory to store your configuration variables. See .env.sample file for required variables.
 
   - #### Database configuration 
     - Change Databse configuration in settings/dev.py according to your database requirement, I would suggest to use some cloud database so that you data is stored regardless where project is running and can have multiple POS setup
