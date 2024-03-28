@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Department Dashboard | Online Retail POS
+{% endblock %}
+
+{% block nav-item %}
+<div class="mb-0 font-weight-bold  h5 text-gray-500 text-uppercase p-3 ">Sales by Department Dashboard</div>
+{% endblock %}
+
+{% block content %}
+<div class="row col-lg-12" style="width:100%;">
+    <div style="text-align:right">*Note: You will need to generate dashboard first in order to create report</div>
+</div>
+<div class="row col-lg-12">
+    <div class="col-lg-10 pr-0 mr-0" style="width:100%;">
+        <form class="row col-lg-12 form mb-1 pr-0" action="{{ request.get_full_path }}" method = "POST" style="width:100%;justify-content:center;text-align:center ;">
+            {% csrf_token %}
+            {% for field in form %}
+            <ul class="col-lg-5" style="margin-top:20px;margin-bottom:20px"><strong style="color:black;">{{ field.label }} :</strong> {{ field }}</ul>
+            {% endfor %}
+            <input class="col-lg-2 btn btn-primary" style="width:100%;height:50px;margin-top:10px;padding-left: 0%;padding-right:0%;padding-right:0%"  id="submit-barcode" type="submit" value="Generate Dashboard">
+        </form>
+    </div>
+    <div class="col-lg-2">
+        <a href="{{report_link}}"  target="_blank" >
+        <button class="btn btn-dark" style="width:100%;height:50px;margin-top:10px;padding-left: 0%;padding-right:0%;padding-right:0%">
+            View/Print Report
+        </button>
+        </a>
+    </div>
+</div>
+<div class="row col-lg-12 mt-4" style="width:100%">
+    <div class="col-lg-4">
+        {{ table_fig|safe }}
+        {{ pie_fig|safe }}
+    </div>
+    <div class="col-lg-8">
+        {{ bar_fig|safe }}
+    </div>
+</div>
+{% endblock %}

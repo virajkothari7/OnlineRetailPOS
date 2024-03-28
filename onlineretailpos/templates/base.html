@@ -1,0 +1,253 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <meta name="robots" content="noindex,nofollow" />
+
+    <title>{% block title %}Online Retail POS{% endblock %} </title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    
+    <link href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.12.1/datatables.min.css"/>
+ 
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.12.1/datatables.min.js"></script>
+    
+    <style>
+        * {
+          box-sizing: border-box;
+        }
+        .openBtn {
+          display: flex;
+          justify-content: left;
+        }
+        .openButton {
+          border: none;
+          border-radius: 5px;
+          background-color: #1c87c9;
+          color: white;
+          padding: 14px 20px;
+          cursor: pointer;
+          position: fixed;
+        }
+        .loginPopup {
+          position: relative;
+          text-align: center;
+          width: 100%;
+        }
+        .formPopup {
+          display: none;
+          position: fixed;
+          left: 50%;
+          top: 20%;
+          transform: translate(-50%, 10%);
+          border: 3px solid #999999;
+          z-index: 9;
+          width: 100%;
+          max-width: 350px;
+        }
+        .formContainer {
+          max-width: 350px;
+          width:100%;
+          padding: 20px;
+          background-color: #fff;
+          
+        }
+        .formContainer input[type=text],
+        .formContainer input[type=password] {
+          width: 100%;
+          padding: 15px;
+          margin: 5px 0 20px 0;
+          border: none;
+          background: #eee;
+        }
+        .formContainer input[type=text]:focus,
+        .formContainer input[type=password]:focus {
+          background-color: #ddd;
+          outline: none;
+        }
+    </style>
+
+</head>
+
+<body id="page-top">
+
+    <audio id="notification-audio" preload="auto" autoplay>
+        <source src="{% static 'note.mp3' %}" type="audio/mpeg">
+    </audio>
+    <!-- <script>
+        // Check if the page is being reloaded
+        if (performance.navigation.type === 1) {
+            var audio = document.getElementById('notification-audio');
+            audio.play();
+        }
+    </script> -->
+    
+    <!-- Page Wrapper -->
+    <div id="wrapper" >
+        {% block sidebar %}
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}" >
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="sidebar-brand-text">Online Retail POS System</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <!-- Divider -->
+            <li class="nav-item active" style="padding-top:20px;padding-bottom:20px">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-desktop"></i>
+                        <span>Dashboards</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Dashboards</h6> -->
+                        <a class="collapse-item" href="{% url 'dashboard_sales' %}"><i class="fas fa-fw fa-chart-line"></i> Sales Dashboard</a>
+                        <a class="collapse-item" href="{% url 'dashboard_department' %}"><i class="fas fa-fw fa-chart-bar"></i> Department Dashboard</a>
+                        <a class="collapse-item" href="{% url 'dashboard_products' %}"><i class="fas fa-fw fa-table"></i> Products Dashboard</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - Dashboard -->
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">
+                Register 
+            </div>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'register' %}" >
+                    <i class="fas fa-cash-register"></i>
+                    <span>Register</span>
+                </a>
+                <a class="nav-link" href="{% url 'transactionView' %}" >
+                    <i class="fas fa-list-alt"></i>
+                    <span>Transactions</span>
+                </a>
+                <a class="nav-link" href="{% url 'retail_display' %}" target="_blank" >
+                    <i class="far fa-window-maximize"></i>
+                    <span>Customer Screen</span>
+                </a>
+                
+            </li>
+            
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">
+                Other
+            </div>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'product_lookup_default' %}" >
+                    <i class="fas fa-search"></i>
+                    <span>Price Lookup</span>
+                </a>
+                <a class="nav-link" href="{% url 'inventory_add' %}" >
+                    <i class="fas fa-dolly"></i>
+                    <span>Add Inventory</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+            {% if user.is_staff %}
+            <div class="sidebar-heading">
+                Staff
+            </div>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'admin:login' %}" target="_blank" >
+                    <i class="fas fa-laptop-house"></i>
+                    <span>Data Administration</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+            {% endif %}
+            <!-- Sidebar Toggler (Sidebar) -->
+            <!-- <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div> -->
+        </ul>
+        {% endblock %}
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content" >
+                {% block navbar %}
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    {% block nav-item %}
+                    {% endblock %}
+                    
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-800 md-primary">Hello, {{ user.first_name }} {{ user.last_name }}</span>
+                                <i class="fas fa-user-alt" style="color:rgb(92, 92, 244);padding-left:5px"></i>
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in p-1"
+                                aria-labelledby="userDropdown" style="background:#e0e0e0">
+                                <hr class="m-1">
+                                <a class="h6 dropdown-item p-3 text-dark m-0" href="{% url 'change_password' %}" style="min-width:200px">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Change Password
+                                </a>
+                                <hr class="m-2">
+                                <a class="h6 dropdown-item p-3 text-danger m-0" href="{% url 'user_logout' %}" style="min-width:200px">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2  text-danger" style="color:rgb(255, 0, 0)"></i>
+                                    Logout
+                                </a>
+                                <hr class="m-1">
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endblock %}
+                <div style="overflow:auto;padding-left: 25px;">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    <!-- Data Table  plugins -->
+    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+    
+    {% block script %}
+    {% endblock %}
+
+
+</body>
+</html>

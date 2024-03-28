@@ -1,0 +1,12 @@
+.env
+.DS_Store
+*.sqlite
+*.sqlite3
+*.pyc
+__pycache__
+__pycache__/
+venv/
+env/
+*/migrations/
+postgres_data/
+!.env.sample

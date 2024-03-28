@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Ending Transaction | Online Retail POS
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container h5 badge-success text-uppercase text-center p-4  m-0" >
+    Transaction Successfully Saved!!</div>
+<div class="row container  text-uppercase text-center text-danger mt-5 p-0 pl-4">
+    This is a online register and is not connected to a Cash-Drawer or a Card-Machine,
+             Please make sure that you are charging the customer for this transaction. 
+             POS System has stored this transaction for record keeping.
+             <br>&nbsp;<br>Thank You - Online Retail POS System
+</div>
+<div class="row container p-0 ">
+    <div class="col-lg-8" style="justify-content: center;text-align:center">
+        <div class="container pt-5"  >
+            <div class="badge-dark text-center p-0 m-5" >
+                {{ change|safe }}
+            </div>
+        </div>
+        <div class="container p-3 mt-5 pt-5" style="justify-content: center;">
+            <a href="{% url 'register' %}"><button class="btn-lg btn-primary" style="height: 100px; width: 250px;">Back to Register</button></a>
+        </div>
+    </div>
+    <div class="col-lg-4" style="text-align:center;padding-top: 2%;">
+        <div class="card shadow-sm mt-3 mb-3">
+            <div class="card-body " id="receipt" style="padding:5%;">
+                <pre>{{ receipt|linebreaks }}</pre>
+                <div class="container rounded" style="justify-content: center;">
+                    <a href="/transaction_receipt{{request.path|cut:'/endTransaction'}}">
+                        <button class="btn-lg btn-secondary " style="width: 100%;">
+                            View Receipt 
+                        </button>
+                        </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

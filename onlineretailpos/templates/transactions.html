@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Transactions | Online Retail POS
+{% endblock %}
+
+{% block nav-item %}
+<div class="mb-0 font-weight-bold  h5 text-gray-500 text-uppercase p-3 "> Transactions </div>
+{% endblock %}
+
+{% block content %}
+<div style="padding-right:3%">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header border-secondary">
+            <form class="form mb-1 row " action="{{ request.get_full_path }}" method = "POST" style="padding-left:3%;width:100%;justify-content:center;text-align:center">
+                {% csrf_token %}
+                {% for field in form %}
+                <ul class="col-lg-4" style="margin-top:20px"><strong style="color:black;padding-right: 15px;padding-left: 10px;">{{ field.label }} :</strong> {{ field }}</ul>
+                {% endfor %}
+                <input class="col-lg-4 btn btn-primary" style="width:100%;height:50px;margin-top:10px;"  id="submit-barcode" type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="card-body ">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" width="100%" cellspacing="0" >
+                    <thead class="table-dark">
+                        <tr >
+                            <th>Transaction ID</th>
+                            <th>Total Sale</th>
+                            <th>Payment Type</th>
+                            <th>Date & Time</th>
+                            <th>Receipt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in transactions %}
+                        <tr>
+                            <td>{{ i.transaction_id }}</td>
+                            <td>{{ i.total_sale }}</td>
+                            <td>{{ i.payment_type }}</td>
+                            <td>{{ i.transaction_dt|date:"D\, M d, Y h:i A" }}</td>
+                            <td><a href="{% url 'transactionReceipt' transNo=i.transaction_id %}" target="_self" >View Receipt</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

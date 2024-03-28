@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}
+    Transaction Receipt | Online Retail POS
+{% endblock %}
+
+{% block nav-item %}  Receipt - {{transNo}}  {% endblock %}
+
+{% block content %}  
+<a href="/transaction_receipt/{{transNo}}/print/" ><button class="btn-lg btn-primary" style="width: 20%; margin-top: 10px; margin-left: 10px;"> Print </button></a>
+<div style="text-align: center; padding-top: 30px;">
+    <pre>{{receipt}}</pre>
+ </div>
+{% endblock content %}  

@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html >
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <meta name="robots" content="noindex,nofollow" />
+
+        <title>Retail Display | Online Retail POS</title>
+        <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+        
+        
+    </head>
+    <body  class="ml-2" style="background-color:rgb(255, 255, 255);position: fixed; top:0px; bottom:0px; left:0px; right:0px;height: 100vh">
+        
+        <div class="row" style="height: 100vh;">
+            <div id="block1" class="col-md-6 p-0 pl-3 pr-3 m-0" style="height: 100%; border-right: 1px solid #000;">
+                <div class="container h3 text-center text-uppercase text-primary pt-4 mt-1" style="height: 8%;">
+                    Welcome to {{ store_name }}
+                </div>
+                <hr style="border-color: blue;">
+                <div class="row mt-0 pt-0" style="width: 100%; height: 75%;">
+                    <div class="col-auto ml-3 pr-5 pl-5" id="retailOutput" style="margin-bottom: 0%; margin-top: 3%; width: 100%; height: 100%;"></div>
+                </div>
+                <hr>
+                <div id="outside" class="container text-center" style="width: 100%; height: 10%;">
+                    <div class="h4 text-dark pb-0 mb-0" id="clock" style="float: center;"></div>
+                    This page automatically updates every 2 seconds. Thank you!!
+                </div>
+            </div>
+
+            <div id="block2" class="col-md-6 p-0 pl-5 pr-5 m-0" style="height: 100vh; border-right: 1px solid #000;">
+                <div style="display: flex; justify-content: center; align-items: center; height: 100%; text-align: center; width: 100%;">
+                    {% for image in display_images %}
+                    <img class="images_block2" src="{% static image %}" style="max-width: 100%; max-height: 90%;" alt="Image">
+                    {% endfor %}
+                </div>
+            </div>
+        
+            <div id="block3" class="col-md-6 p-0 pl-5 pr-5 m-0" style="height: 100vh;">
+                <div style="display: flex; justify-content: center; align-items: center; height: 100%; text-align: center; width: 100%;">
+                    {% for image in display_images %}
+                    <img class="images_block3" src="{% static image %}" style="max-width: 100%; max-height: 90%;" alt="Image">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        
+    </body>
+    <script>
+        let xmlHttpReq = new XMLHttpRequest();
+        function updateScreen(){
+            xmlHttpReq.open("GET", window.location.pathname+"values/",false);
+            xmlHttpReq.send(null);
+            responseText = xmlHttpReq.responseText
+            if(responseText[1] == "d"){
+                document.getElementById("block2").style.display = "none"
+                document.getElementById("block1").style.display = "block"
+                document.getElementById("retailOutput").innerHTML = responseText
+                
+                // Scroll the table div to the bottom
+                var tableDiv = document.getElementById("table-body");
+                if (tableDiv) {
+                    tableDiv.scrollTop = tableDiv.scrollHeight; }
+            
+            }
+            else if(responseText == "IMAGE"){
+                setTimeout(function(){
+                    document.getElementById("block1").style.display = "none"
+                    document.getElementById("block2").style.display = "block";
+                }, 5000);
+            }
+            else{
+                document.getElementById("block2").style.display = "none"
+                document.getElementById("block1").style.display = "block"
+                document.getElementById("outside").innerHTML = ""
+                document.getElementById("retailOutput").innerHTML = "<div ><div class='container h1 pt-5 pb-3 text-center text-dark'>Please let cashier know to update this tab.</div><br><br>*Note: Cashier please reload this browser if that doesn't work then open customer screen again once logged in on the portal in same browser.</div>"
+            };
+            
+            document.getElementById( "clock" ).innerHTML = new Date().toLocaleString(); //object of date()
+        }
+        updateScreen();
+        const interval = setInterval(updateScreen,3000)
+
+        var myIndex2 = 0;
+        carousel2();
+        function carousel2() {
+            var i;
+            var x = document.getElementsByClassName("images_block2");
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            }
+            myIndex2++;
+            if (myIndex2 > x.length) {myIndex2 = 1}
+            x[myIndex2-1].style.display = "block";
+            setTimeout(carousel2, 7000); }
+
+        var myIndex3 = 1;
+        carousel3();
+        function carousel3() {
+            var i;
+            var x = document.getElementsByClassName("images_block3");
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            }
+            myIndex3++;
+            if (myIndex3 > x.length) {myIndex3 = 1}
+            x[myIndex3-1].style.display = "block";
+            setTimeout(carousel3, 8000); }
+
+    </script>
+</html>

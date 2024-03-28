@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+
+{% block title %}
+Register | Online Retail POS
+{% endblock %}
+
+{% block nav-item %}
+<div class="mb-0 font-weight-bold  h5 text-gray-500 text-uppercase p-3 "> Register </div>
+{% endblock %}
+
+{% block content %}
+<div class="row" style="width: 100%;padding-right: 0px;">
+    <div class="col-lg-6">
+        <div class="row mb-0" style="padding-bottom:5px;">
+            <form class="form col-lg-6" action="{{ request.get_full_path }}" method = "POST" style="width:100%;padding-bottom: 10px;padding:10px;padding-top: 15px;">
+                {% csrf_token %}
+                <div class="row" style="width:100%;justify-content: center;">
+                {% for field in form %}
+                <ul style="padding-left:25px;width:300px;"><strong style="color:black;width:100%;padding-right: 15px;padding-left: 10px;">{{ field.label }} :</strong> {{ field }}</ul>
+                {% endfor %}
+                </div>
+                <input class="btn btn-primary"  style="width:100%;margin-top: 10px;" id="submit-barcode" type="submit" value="Submit">
+            </form>
+            <div class="col-lg-6 card border-left-success shadow-sm h-100 py-2" style="width:100%;margin-top:10px;margin-bottom: 10px;">
+                <div class="card-header py-2">
+                    <h6 class="mb-0 font-weight-bold text-uppercase text-success ">Transaction Info</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                <strong>Sub Total : </strong>{{ total|sub:tax_total|floatformat:2 }}
+                            </div>
+                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                <strong>Tax Total : </strong>{{ tax_total|floatformat:2 }}</div>
+                            <div class="text-xl font-weight-bold text-success text-uppercase mb-1">
+                                <strong>Total : </strong></div>
+                            <div class="h3 mb-0 font-weight-bold text-gray-800" style="text-align:right;" >{{ total|floatformat:2 }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-3x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2" id="cart_display"  style="padding-top: 10px; padding-bottom: 0px;">
+            {% if no_product %}
+            <div class="loginPopup" id='popup'>
+                <div class="formPopup" id="popupForm" style="display:block">
+                    <div class="formContainer">
+                        <div class="h3 mb-5 text-gray-800"> Product Not Found, Please add Product in Inventory </div>
+                        <button type="button" class="btn btn-danger btn-lg btn-block" onclick="closeForm()">Close</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="card shadow-sm" style="width:100%;height:465px;">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Transaction Details</h6>
+                </div>
+                <div class="card-body" style="overflow: auto ;padding:0">
+                    <table class="table" style="text-align:right;">
+                        <tr>
+                            <th style="font-family: bold;color:rgba(0, 0, 0, 0.623)" >Barcode/Name</th>
+                            <!-- <th style="font-family: bold;color:rgba(0, 0, 0, 0.623)">Name</th> -->
+                            <th style="font-family: bold;color:rgba(0, 0, 0, 0.623)">Qty</th>
+                            <th style="font-family: bold;color:rgba(0, 0, 0, 0.623)">Price</th>
+                            <th style="font-family: bold;color:rgba(0, 0, 0, 0.623)">L-Total<br>Tax</th>
+                            <th style="font-family: bold;color:rgba(0, 0, 0, 0.623)">L-Total<br>Deposit</th>
+                            <th style="font-family: bold;color:rgba(0, 0, 0, 0.623)">Line<br>Total</th>
+                        </tr>
+                        {% for key, value in cart.items %}
+                        <tr>
+                            <th style="text-align:left">{{key}} <br> {{value.name}}</th>
+                            <!-- <td>{{value.name}}</td> -->
+                            <td>{{value.quantity}}</td>
+                            <td>{{value.price}}</td>
+                            <td>{{value.tax_value}}</td>
+                            <td>{{value.deposit_value}}</td>
+                            <td>{{value.line_total}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table> 
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+    <div class="col-lg-6" >
+        <hr >
+        <div class="btn-block" style="padding-top: 10px;text-align:center">
+            <button id="disable_1" onclick="return window.open('/register/returns_transaction/',target='_self')" class="btn btn-warning" style="width:23%;margin:2px;height:60px;margin-bottom:5px" > (-)<br>Returns </button>
+            <button id="disable_2" onclick="return window.open('/register/suspend_transaction/',target='_self')" class="btn btn-info" style="width:23%;margin:2px;height:60px;margin-bottom:5px"> Suspend<br>Transaction </button>
+            <button onclick="return window.open('/register/recall_transaction/',target='_self')" class="btn btn-info" style="width:23%;margin:2px;height:60px;margin-bottom:5px"> Recall<br>Transaction </button>
+            <button id="disable_4" onclick="return window.open('/register/cart_clear/',target='_self')" class="btn btn-danger" style="width:23%;margin:2px;height:60px;margin-bottom:5px"> Clear<br>Transaction </button>
+        </div>
+        <hr >
+        <div class="btn-block" style="padding-top: 10px;text-align:center" >
+            <button id="disable_P_1" onclick="return window.open('/endTransaction/card/DEBIT_CREDIT/',target='_self')" class="btn btn-success" style="width:23%;height:60px; margin:2px;margin-bottom:5px;background-color:darkgreen" > Debit/<br>Credit </button>
+            <button id="disable_P_2" onclick="endTransactionCash(5,'{{ total }}')" class="btn btn-success" style="width:23%;margin:2px;height:60px;margin-bottom:5px"> 5$ </button>
+            <button id="disable_P_3" onclick="endTransactionCash(10,'{{ total }}')" class="btn btn-success" style="width:23%;margin:2px;height:60px;margin-bottom:5px"> 10$ </button>
+            <button id="disable_P_4" onclick="endTransactionCash('Next','{{ total }}')" class="btn btn-success" style="width:23%;margin:2px;height:60px;margin-bottom:5px;background-color:rgb(27, 66, 27)"> Next<br>Dollar </button>
+            <button id="disable_P_5" onclick="return window.open('/endTransaction/card/EBT/',target='_self')" class="btn btn-success" style="width:23%;margin: 2px;height:60px;margin-bottom:5px;background-color:darkgreen"> EBT </button>
+            <button id="disable_P_6" onclick="endTransactionCash(20,'{{ total }}')" class="btn btn-success" style="width:23%;margin:2px;height:60px;margin-bottom:5px" > 20$ </button>
+            <button id="disable_P_7" onclick="endTransactionCash(50,'{{ total }}')" class="btn btn-success" style="width:23%;margin: 2px;height:60px;margin-bottom:5px"> 50$ </button>
+            <button id="disable_P_8" onclick="endTransactionCash('CASH','{{ total }}')" class="btn btn-success" style="width:23%;margin:2px;height:60px;margin-bottom:5px;background-color:rgb(27, 66, 27)"> CASH </button>
+        </div>
+        <div class="loginPopup" id='cash_popup'> </div>
+        <hr >
+        <div class="btn-block"  style="height: 353px;overflow:scroll;text-align:center;padding-top: 7px;">
+            {% for i in displayed_items %}
+             <!-- only 24 buttons to be added per section  -->
+            {% if i.variable_price %}
+            <button onclick="variableAmount('{{i.barcode}}','{{ i.display_name }}','{{ i.display_info }}')" class="btn btn-primary" style="width:23%;margin:2px;height:60px;margin-bottom:5px;margin-top:5px;background-color:'{{ i.display_color }}'"> {{ i.display_name }} </a>
+            {% else %}
+            <button onclick="return window.open('/cart/add/{{i.barcode}}/1/',target='_self')" class="btn btn-dark" style="width:23%;margin:2px;height:60px;margin-bottom:5px;background-color:'{{ i.display_color }}'" >  {{ i.display_name }} </button>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <hr style="margin-right: 4%;">
+    </div>
+</div>
+    {% if total == 0.0 %}
+    <script>
+        var elements = document.querySelectorAll('[id^="disable_"]');
+        for (var i = 0; i < elements.length; i++){ elements[i].disabled = true; }
+    </script>
+    {% endif %}
+<script>
+    function endTransactionCash(value,total){
+        var total = Number(total)
+        if (value=="Next"){
+            value = Math.ceil(total) }
+        var value = Number(value)
+        if (total<=value){
+            window.open("/endTransaction/cash/"+value+"/", target="_self")
+        }else{
+            // var cash = Number(prompt("Enter Cash Amount...\n\n"))
+            document.getElementById("cash_popup").innerHTML = '<div class="formPopup" id="popupForm" style="display:block"><form action="#" onsubmit="return endForm(this,'+total+')" class="formContainer"> <div class="h3 mb-4 text-gray-800">Please Enter <br>Cash Amount....</div><input class="mb-3" type="text" id="cashAmount" placeholder="Cash Amount..." autocomplete="off" required /><button type="submit" class="btn btn-success btn-lg btn-block">Enter</button><button type="button" class="btn btn-danger btn-lg btn-block" onclick="closeForm()">Close</button></form></div>'
+            $( "#cashAmount" ).focus();
+        }
+    }
+    function endForm(form,total){
+        closeForm()
+        endTransactionCash(form.cashAmount.value,total)
+        return false;
+    }
+    function closeForm(){
+        document.getElementById("popupForm").style.display = "none";
+    }
+    
+    function variableAmount(barcode,name,info){
+        document.getElementById("cash_popup").innerHTML = '<div class="formPopup" id="popupForm" style="display:block"><form action="#" onsubmit="return amountProductFunc(this);" class="formContainer"><label id="department_value" class="h5 text-primary">'+barcode+'</label><hr><div class="h5 text-success mb-3">'+name+'</div><div class="h6 mb-1 text-gray-800" style="text-align:left">Please Enter Amount...</div><input class="mb-3" type="text" id="cashAmount" placeholder="Variable Amount..." autocomplete="off" required /><button type="submit" class="btn btn-success btn-lg btn-block">Enter</button><button type="button" class="btn btn-danger btn-lg btn-block" onclick="closeForm()">Close</button><div style="text-align:left"><br>'+info+'</div></form></div>'
+        $( "#cashAmount" ).focus();
+    }
+    function amountProductFunc(form){
+        closeForm()
+        department = form.firstElementChild.innerHTML
+        amount = Number(form.cashAmount.value)
+        if (amount){
+            window.open("/register/"+department+"/"+amount+"/",target="_self")
+        }
+        return false
+    }
+</script>
+{% endblock %}

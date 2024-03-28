@@ -1,0 +1,57 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Welcome | Online Retail POS
+{% endblock %}
+
+{% block nav-item %}
+<div class="mb-0 font-weight-bold  h5 text-gray-900 text-uppercase p-3 ">Online retail Pos system - {{ store_name }} </div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+<!-- Outer Row -->
+{% if logout %}
+<div class="col-lg-6 card border-left-success shadow h-100 py-2" style="width:100%;margin-top:10px;">
+    <h6 class="mb-0 font-weight-bold text-uppercase text-success ">Successfully Logged Out!!!</h6>
+</div>
+{% endif %}
+{% if error %}
+<div class="col-lg-6 card border-left-danger shadow h-100 py-2" style="width:100%;margin-top:10px;">
+    <h6 class="mb-0 font-weight-bold text-uppercase text-danger ">Log-In Error, Please enter correct credential!!!</h6>
+</div>
+{% endif %}
+
+<div class="row-fluid card o-hidden border-4 shadow-sm m-5">
+   <div class="card-header">
+        <div class="text-center p-2">
+            <h1 class="h4 text-gray-900 m-3">Welcome!</h1>
+        </div>
+    </div>
+    <div class="row card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="col-lg-6 d-none d-lg-block" style="justify-content:center;text-align:center">
+            <img src="{% static 'img/log-in-gcb59d165a_1280.jpg' %}" width="500px" height="350px"  >
+        </div>
+        <div class="col-lg-6 p-5 center" >
+            <form class="user" method="post" action="{% url 'user_login' %}" style="padding: 20px;">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <input type="username" autocomplete="off" name="username" class="form-control form-control-user"
+                        id="username" placeholder="Please Enter Username...">
+                </div>
+                <div class="form-group mb-5">
+                    <input type="password" autocomplete="off" name="password" class="form-control form-control-user"
+                        id="password" placeholder="Enter Your Password...">
+                </div>
+                <hr>
+                <button type="Submit" class="btn btn-primary btn-user btn-block"> Login </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

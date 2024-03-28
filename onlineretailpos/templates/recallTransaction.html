@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load transaction_tags %}
+
+{% block title %}
+Recall Transaction | Online Retail POS
+{% endblock %}
+
+{% block nav-item %}
+<div class="mb-0 font-weight-bold  h5 text-gray-500 text-uppercase p-3 "> Recall Transaction </div>
+{% endblock %}
+
+{% block content %}
+<div class="row col-lg-12">
+    <div class="row col-lg-12" style="justify-content: end;padding-right: 5%;" >
+        &nbsp;&nbsp;&nbsp;&nbsp;*IDs are generated every time when Transactions are Suspended.<br>If you Recall and Suspend a Transaction then it will be on top again.
+    </div>
+    <div class="row col-lg-12" style="justify-content: center;padding-right: 5%; margin-top: 20px;" >
+        <a  href="{% url 'register' %}">
+            <button class="btn-lg btn-primary"> Bact to Register</button>
+        </a>
+    </div>
+    <div class="row col-lg-12" style="justify-content: center;">
+        <div  class="row container" style="margin-top:20px">
+        {% for value in obj_rt|sort %}
+            <div class="card shadow card border-left-dark col-lg-5" style="padding:0;text-align:center;margin:3%">
+                <div class="card-header text-primary h5 p-2">
+                    Date and Time : {{ value|transactionID_2_date|date:"D\, M d\, Y \-  h:i A"  }}
+                </div>
+                <div class="card-body text-success">
+                    <a  href="{% url 'recall_transaction_no' recallTransNo=value %}"  class="m-1 font-weight-bold text-success h3">{{ value }}</a>
+                    <!-- Date and Time : {{ value|transactionID_2_date|date:"D d M Y \-  h:i A"  }} -->
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

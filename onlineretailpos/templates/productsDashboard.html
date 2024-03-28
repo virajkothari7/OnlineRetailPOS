@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}
+Products Dashboard | Online Retail POS
+{% endblock %}
+
+{% block nav-item %}
+<div class="mb-0 font-weight-bold  h5 text-gray-500 text-uppercase p-3 "> Products Dashboard </div>
+{% endblock %}
+
+
+{% block content %}
+<div class="row col-lg-12">
+        <div class="col-lg-6 mt-3">
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="font-weight-bold text-success h3 text-center p-3"> Top Best-Seller Products </div>
+                    <div> Top {{number}} Best Seller for Each Department.<br> Scroll to View.... </div> 
+                </div>
+                <div class="card-body " style="height:490px;overflow-y: visible;overflow-x:scroll" >
+                    {% for dptmnt, value in products_group.items %}
+                        <div class="row pr-2 pb-3 mt-3">
+                            <div class="h4 text-light text-center badge-primary pb-2 pt-3 mb-0" style="width:100%"> {{ dptmnt }}</div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-gray-800" width="100%" cellspacing="1" >
+                                    <thead class="table-dark" >
+                                        <tr class="col-lg-12 text-left" >
+                                            <th class="col-lg-4">Barcode</th>
+                                            <th class="col-lg-6">Name</th>
+                                            <th class="col-lg-2">Qty Sold</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in value %}
+                                        <tr>
+                                            <td>{{ i.barcode }}</td>
+                                            <td>{{ i.name }}</td>
+                                            <td>{{ i.qty }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="font-weight-bold text-danger h3 text-center p-3"> Low Inventory Products </div>
+                    <div> Top 50 Products that are low in inventory or is quantity is wrong. Please take a look into it. </div> 
+                </div>
+                <div class="card-body" >
+                    <table class="table  mb-0 pl-2" width="100%" cellspacing="1" >
+                        <thead>
+                            <tr class="col-lg-12 text-left badge-dark" >
+                                <th class="col-lg-4">Barcode</th>
+                                <th class="col-lg-6">Name</th>
+                                <th class="col-lg-2">Inv. Qty</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="table-responsive " style="height:400px;overflow-y: visible;overflow-x:scroll">
+                        <table class="table table-bordered table-hover pl-2" width="100%" cellspacing="1" >
+                            <tbody>
+                                {% for i in low_inventory_products %}
+                                <tr class="col-lg-12">
+                                    <td class="col-lg-4" >{{ i.barcode }}</td>
+                                    <td class="col-lg-6" >{{ i.name }}</td>
+                                    <td class="col-lg-2" >{{ i.qty }}</td>
+                                 </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+{% endblock %}
