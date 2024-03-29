@@ -58,15 +58,11 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            # branch event
-            type=ref,event=branch
-            # tag event
-            type=ref,event=tag
-            # pull request event
-            type=ref,event=pr
             # set latest tag for main branch
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
-
+            # tag event
+            type=ref,event=tag
+            
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
@@ -75,7 +71,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
