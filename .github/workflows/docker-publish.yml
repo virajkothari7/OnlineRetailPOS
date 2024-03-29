@@ -60,11 +60,6 @@ jobs:
           #   # set latest tag for main branch
           #   type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
       
-      - name: Lowercase repository
-        run: |
-          echo "REPO_LOWER=${env.REGISTRY}/${env.IMAGE_NAME@L}" >>${GITHUB_ENV}
-      
-
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
@@ -73,7 +68,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{REPO_LOWER}}:latest # ${{ steps.meta.outputs.tags }} 
+          tags: ${{ env.REGISTRY }}/${{ github.actor }}/onlineretailpos:latest # ${{ steps.meta.outputs.tags }} 
           labels: ${{ steps.meta.outputs.labels }}
 
       # Sign the resulting Docker image digest except on PRs.
@@ -86,7 +81,7 @@ jobs:
         env:
           # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
-          TAGS: ${{REPO_LOWER}}:latest # ${{ steps.meta.outputs.tags }}
+          TAGS: ${{ env.REGISTRY }}/${{ github.actor }}/onlineretailpos:latest # ${{ steps.meta.outputs.tags }}
           COSIGN_EXPERIMENTAL: "true"
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
