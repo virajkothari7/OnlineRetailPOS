@@ -1,4 +1,4 @@
-Django==4.1
+Django==4.1.13
 django_admin_rangefilter==0.8.6
 django_colorfield==0.7.2
 django_import_export==2.8.0
