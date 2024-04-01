@@ -12,7 +12,7 @@ ENV PYTHONUNBUFFERED 1
 
 # Install all dependencies and perform migrations
 RUN pip install --upgrade pip 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --no-cache-dir
 
 # Expose port 8000
 EXPOSE 8000
