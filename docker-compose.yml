@@ -1,0 +1,42 @@
+version: '3.8'
+
+# Make sure you have .env file for varibles to access as well 
+services:
+  postgresdb:
+    image: postgres:latest
+    container_name: pos-postgres-container
+    environment: #Will Get this values from .env file in directory
+      POSTGRES_USER: DBUSER
+      POSTGRES_PASSWORD: DBPASS
+      POSTGRES_DB: "OnlineRetailPOS"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data  # Mount volume for PostgreSQL data
+    ports:
+      - '5432:5432'
+
+  webapp:
+    container_name: pos-django-webapp-container
+    image: onlineretailpos
+    build: 
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - '8000:8000'
+    environment:
+      SECRET_KEY_DEV: 'default-*fejw5!9md7cy9m-)*qw7w3$=%9$-9uyqn(k1smw*c'  # Change This 
+      NAME_OF_DATABASE: 'postgres' # Set to postgres if using Postgres DB from docker image, ops avail: sqlite, postgres, mysql 
+      DB_HOST: postgresdb
+      DB_NAME: "OnlineRetailPOS" 
+      DB_USERNAME: DBUSER
+      DB_PASSWORD: DBPASS
+      # If you are not providing .env file just add 
+    env_file: # Map here .env file if you are providing .env for the varibles needed
+      - path: /.env
+        required: false
+    depends_on:
+      - postgresdb
+
+# Run with docker compose up with provinding DBUSER, DBPASS and SecretKey(Optnl). 
+# You can also pass in .env file just create. env file in directory
+# If you run into error just cancel and run docker compose up, it may error out in build or docker compose up just rerun the command
+# I think it is due to  connection error between postgres and webapp.

@@ -103,7 +103,7 @@ def retail_display(request,values=None):
     if os.path.exists(f"./{path}"):
         # print(f"{settings.STATIC_ROOT}/{path}")
         shutil.copytree(f"./{path}", f"{settings.STATIC_ROOT}/{path}", dirs_exist_ok=True)
-    img_list = [ path+i for i in  os.listdir(path)]
+    img_list = [ path+i for i in  os.listdir(path) if not i.endswith('.md')]
     
     return render(request,'retailDisplay.html',context={"store_name":settings.STORE_NAME, "display_images":img_list})
 

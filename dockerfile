@@ -2,9 +2,9 @@
 FROM python:3.8   
 
 # Set the working directory  
-WORKDIR /webapp
+WORKDIR /OnlineRetailPOS
 
-COPY . /webapp/
+COPY . /OnlineRetailPOS/
 
 # Set environment variables  
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -16,6 +16,8 @@ RUN pip install -r requirements.txt --no-cache-dir
 
 # Expose port 8000
 EXPOSE 8000
+
+RUN python manage.py collectstatic
 
 # Please provide env varibales that are required to set up database configuration
 # Command to run the migrations and start the server
