@@ -10,8 +10,11 @@
 	<img src="https://img.shields.io/github/languages/top/virajkothari7/OnlineRetailPOS?style=default&color=0080ff" alt="repo-top-language">
 	<img src="https://img.shields.io/github/languages/count/virajkothari7/OnlineRetailPOS?style=default&color=0080ff" alt="repo-language-count">
 <p>
+<br>
 
 Welcome to the Online Retail POS (Point of Sale) System project built on Django. This system allows you to run a retail store, manage inventory, and process sales, all within a web-based interface. You can also run it locally and access it from different devices on the same network using the system's IP address.
+
+<br>
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
