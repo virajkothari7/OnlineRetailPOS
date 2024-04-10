@@ -28,6 +28,9 @@ Welcome to the Online Retail POS (Point of Sale) System project built on Django.
 - [Features](#features)
 - [License ](#license-)
 
+
+<br>
+
 ## Getting Started
   Before you begin, ensure you have the following prerequisites installed:
   - **Python 3.x**
@@ -123,6 +126,9 @@ Welcome to the Online Retail POS (Point of Sale) System project built on Django.
   - **Folder: images4display**   
     In customer display there is slideshow of images, which can be used to put promotion/prices. Project uses directory images4display to slideshow phots from that directory, all photos in directory will be used. Only add photos in directory otherwise it will run into erro. More [info](/images4display/readme.md)
 
+
+<br>
+
 ## Docker
 
   #### Docker Package
@@ -161,8 +167,12 @@ Welcome to the Online Retail POS (Point of Sale) System project built on Django.
   Also if you want to customize the project and still use docker, you can make changes to the code and build the docker image with that code using docker compose.
 
 
+<br>
+
 ## Screenshots
 
+
+<br>
 
 ## Features
 
@@ -173,6 +183,9 @@ Welcome to the Online Retail POS (Point of Sale) System project built on Django.
 - Can set-up as live web app, however will have to configure accodingly. Some funcitonality may not work on prod web app.
 - Run locally on touch screen device for best functionality
 - Can have set up as-display images on customer facing screen, manage images4display folder in base dir of project.
+
+
+<br>
 
 ## License [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](/LICENSE)
 This project is licensed under MIT License. For more details, refer to the License file.
