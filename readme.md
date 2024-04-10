@@ -83,6 +83,7 @@ Welcome to the Online Retail POS (Point of Sale) System project built on Django.
     python manage.py migrate
     ```
   - **Creating Superuser for access to platform**
+    <br>
     Creating your main user, to access admin panel and create more users, if running in docker, use docker shell once docker setup is done.
     ```
     python manage.py createsuperuser
@@ -108,18 +109,18 @@ Welcome to the Online Retail POS (Point of Sale) System project built on Django.
 
 
   #### Other
-  - **Reciept Functionality**
+  - **Reciept Functionality**   
     This only works on the machine where the project is running, since it requires port connection to printer.
     - Make sure you have receipt printer connected to django server machine.
     - If your tablet can connect to POS printer than configure this project print_reciept method on tranasaction.views accordingly
     <br>
-  - **Customer Screen**
+  - **Customer Screen**   
     You need to do a dual monitor setup on the machine where you will accesing POS system, 
     Example: 
     - If accesing POS from Tablet with django server running on rasp-pi or a server, you will connect second monitor to Tablet for this functionality
     - If accesing POS from Window touch tablet/pc with django runnnig locally on same machine, connect second display here for this funcitonality
     <br>
-  - **Folder: images4display**
+  - **Folder: images4display**   
     In customer display there is slideshow of images, which can be used to put promotion/prices. Project uses directory images4display to slideshow phots from that directory, all photos in directory will be used. Only add photos in directory otherwise it will run into erro. More [info](/images4display/readme.md)
 
 ## Docker
