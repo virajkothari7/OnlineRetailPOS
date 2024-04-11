@@ -155,10 +155,10 @@ def endTransaction(request,type,value):
         if type == "card": # Card Transaction
             # EBT Transaction
             if value=="EBT": 
-                return_transaction = addTransaction(request.user,"EBT",total,cart)
+                return_transaction = addTransaction(request.user,"EBT",total,cart,total)
             # DEBIT/CREDIT Transaction
             elif value=="DEBIT_CREDIT": 
-                return_transaction = addTransaction(request.user,"DEBIT/CREDIT",total,cart)
+                return_transaction = addTransaction(request.user,"DEBIT/CREDIT",total,cart,total)
         elif type=="cash": # Cash Transaction
             value = round(float(value),2)
             if value>= total: 

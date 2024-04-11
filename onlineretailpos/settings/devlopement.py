@@ -44,7 +44,7 @@ database_dict = {
     }
 }
 
-print(database_dict[os.getenv('NAME_OF_DATABASE', 'sqlite')])
+print(f"Database configuration is set to {database_dict[os.getenv('NAME_OF_DATABASE', 'sqlite')]['ENGINE']}")
 
 DATABASES = {
     'default':  database_dict[os.getenv('NAME_OF_DATABASE', 'sqlite')]
