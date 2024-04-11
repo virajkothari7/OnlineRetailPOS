@@ -213,3 +213,7 @@ Welcome to the Online Retail POS (Point of Sale) System project built on Django.
 
 ## License [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](/LICENSE)
 This project is licensed under MIT License. For more details, refer to the License file.
+
+
+
+
