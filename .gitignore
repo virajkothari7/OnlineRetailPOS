@@ -7,6 +7,5 @@ __pycache__
 __pycache__/
 venv/
 env/
-*/migrations/
 postgres_data/
 !.env.sample
