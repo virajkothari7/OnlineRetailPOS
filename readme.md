@@ -176,19 +176,22 @@ Welcome to the Online Retail POS (Point of Sale) System project built on Django.
 <table>
   <tr>
     <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_21.png /></td>
-    <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_2.png /></td>
-    <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_1.png /></td>
-  </tr>
-  <br>
-  <tr>
     <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_4.png /></td>
+  </tr>
+  <tr>
     <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_6.png /></td>
     <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_7.png /></td>
   </tr>
-  <br>
+  <tr>
+    <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_2.png /></td>
+    <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_1.png /></td>
+  </tr>
   <tr>
     <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_16.png /></td>
     <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_15.png /></td>
+  </tr>
+  <tr>
+    <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_17.png /></td>
     <td><img src=https://github.com/virajkothari7/OnlineRetailPOS/blob/main/screenshots/Screenshot_20.png /></td>
   </tr>
 </table>
