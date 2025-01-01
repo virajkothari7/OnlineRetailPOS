@@ -51,7 +51,7 @@ The Online Retail POS System is a web-based application developed with Django, d
     pip install -r requirements.txt
     ```
 
-  - ##### Option 2 (Zip Downlaod)
+  - ##### Option 2 (Zip Download)
     If you prefer, you can also download the project as a ZIP file and extract it to your desired location.
     ```
     cd path_to_dir/online-retail-pos
